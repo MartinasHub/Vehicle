@@ -1,0 +1,61 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<Project.MVC.Models.VehicleMake>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<br />
+<p>
+    @Html.ActionLink("Create New", "Create", "VehicleMakes", routeValues: null, htmlAttributes: new { @class = "btn btn-primary", @role = "button" })
+</p>
+
+<br />
+
+@using (Html.BeginForm("Index", "VehicleMakes", FormMethod.Get))
+{
+    <div class="row form-group">
+        <div class="col-md-3">
+            @Html.TextBox("expression", null, new  { @class = "form-control", @placeholder = "Search"})
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+}
+
+<br />
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.ActionLink("Name", "Index", new { sort = ViewBag.SortNameParameter })
+        </th>
+        <th>
+            @Html.ActionLink("Abrv", "Index", new { sort = ViewBag.SortAbrvParameter })
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Abrv)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+
+<br />
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, expression = Request.QueryString["expression"], sort = Request["sort"] }),
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.Always})

@@ -11,7 +11,7 @@ namespace Project.Service.VehicleService
     public interface IVehicleServiceMake
     {
         Task <IEnumerable<VehicleMake>> FindAllAsync(string expression);
-        Task<IEnumerable<VehicleMake>> OrderByAsync(Expression<Func<VehicleMake, object>> sort);
+        Task<IEnumerable<VehicleMake>> OrderByAsync(string sort);
         Task<IEnumerable<VehicleMake>> GetAllAsync();
         Task<VehicleMake> GetByIdAsync(int id);
         Task InsertAsync(VehicleMake vehicleMake);

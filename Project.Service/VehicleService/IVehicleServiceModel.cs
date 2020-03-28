@@ -10,7 +10,7 @@ namespace Project.Service.VehicleService
     public interface IVehicleServiceModel
     {
         Task<IEnumerable<VehicleModel>> FindAllAsync(string expression);
-        Task<IEnumerable<VehicleModel>> OrderByAsync(Expression<Func<VehicleModel, object>> sort);
+        Task<IEnumerable<VehicleModel>> OrderByAsync(string sort);
         Task<IEnumerable<VehicleModel>> GetAllAsync();
         Task<VehicleModel> GetByIdAsync(int id);
         Task InsertAsync(VehicleModel vehicleModel);

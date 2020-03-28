@@ -31,22 +31,8 @@ namespace Project.MVC.Controllers
             model = await _vehicleServiceModel.FindAllAsync
                 (expression);
 
-            switch (sort)
-            {
-                case "Name_desc":
-                    model = model.OrderByDescending(m => m.Name);
-                    break;
-                case "Abrv":
-                    model = model.OrderBy(m => m.Abrv);
-                    break;
-                case "Abrv_desc":
-                    model = model.OrderByDescending(m => m.Abrv);
-                    break;
-                default:
-                case "Name":
-                    model = model.OrderBy(m => m.Name);
-                    break;
-            }
+            model = await _vehicleServiceModel.OrderByAsync(sort);
+
             return View(model.ToPagedList(page ?? 1, 10));
         }
 

@@ -26,25 +26,10 @@ namespace Project.MVC.Controllers
 
             var model = await _vehicleServiceMake.GetAllAsync();
 
-            model = await _vehicleServiceMake.FindAllAsync
-                (expression);
+            model = await _vehicleServiceMake.FindAllAsync(expression);
 
-            switch (sort)
-            {
-                case "Name_desc":
-                    model = model.OrderByDescending(m => m.Name);
-                    break;
-                case "Abrv":
-                    model = model.OrderBy(m => m.Abrv);
-                    break;
-                case "Abrv_desc":
-                    model = model.OrderByDescending(m => m.Abrv);
-                    break;
-                default:
-                case "Name":
-                    model = model.OrderBy(m => m.Name);
-                    break;
-            }
+            model = await _vehicleServiceMake.OrderByAsync(sort);
+
             return View(model.ToPagedList(page ?? 1, 10));
         }
 

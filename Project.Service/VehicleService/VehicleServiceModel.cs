@@ -42,7 +42,7 @@ namespace Project.Service.VehicleService
             await _repository.InsertAsync(vehicleModel);
         }
 
-        public async Task<IEnumerable<VehicleModel>> OrderByAsync(Expression<Func<VehicleModel, object>> sort)
+        public async Task<IEnumerable<VehicleModel>> OrderByAsync(string sort)
         {
             return await _repository.OrderByAsync(sort);
         }

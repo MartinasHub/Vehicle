@@ -58,9 +58,28 @@ namespace Project.Service.VehicleService
                                         expression == null).ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> OrderByAsync(Expression<Func<T, object>> sort)
+        public async Task<IEnumerable<T>> OrderByAsync(string sort)
         {
-            return await Entities.OrderBy(sort).ToListAsync();
+            var model = await GetAllAsync();
+
+            switch (sort)
+            {
+                case "Name_desc":
+                    model = model.OrderByDescending(m => m.Name);
+                    break;
+                case "Abrv":
+                    model = model.OrderBy(m => m.Abrv);
+                    break;
+                case "Abrv_desc":
+                    model = model.OrderByDescending(m => m.Abrv);
+                    break;
+                default:
+                case "Name":
+                    model = model.OrderBy(m => m.Name);
+                    break;
+            }
+
+            return model;
         }
 
         private IDbSet<T> Entities

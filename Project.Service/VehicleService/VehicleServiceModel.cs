@@ -22,7 +22,7 @@ namespace Project.Service.VehicleService
             await _repository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<VehicleModel>> FindAllAsync(Expression<Func<VehicleModel, bool>> expression)
+        public async Task<IEnumerable<VehicleModel>> FindAllAsync(string expression)
         {
             return await _repository.FindAllAsync(expression);
         }

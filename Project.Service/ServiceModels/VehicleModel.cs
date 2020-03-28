@@ -9,11 +9,6 @@ namespace Project.MVC.Models
 {
     public class VehicleModel : BaseEntity
     {
-        [Required]
-        public string Name { get; set; }
-        [Required]
-        public string Abrv { get; set; }
-
         [Display(Name = "Vehicle")]
         public int MakeId { get; set; }
         [ForeignKey("MakeId")]

@@ -8,11 +8,6 @@ namespace Project.MVC.Models
 {
     public class VehicleMake : BaseEntity
     {
-        [Required]
-        public string Name { get; set; }
-        [Required]
-        public string Abrv { get; set; }
-
         public virtual ICollection<VehicleModel> VehicleModels { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace Project.Service.VehicleService
             await _repository.DeleteAsync(id);
         }
 
-        public async Task <IEnumerable<VehicleMake>> FindAllAsync(Expression<Func<VehicleMake, bool>> expression)
+        public async Task <IEnumerable<VehicleMake>> FindAllAsync(string expression)
         {
             return await _repository.FindAllAsync(expression);
         }

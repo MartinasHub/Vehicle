@@ -51,9 +51,11 @@ namespace Project.Service.VehicleService
             await _context.SaveChangesAsync();
         }
 
-        public async Task <IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> expression)
+        public async Task <IEnumerable<T>> FindAllAsync(string expression)
         {
-            return await Entities.Where(expression).ToListAsync();
+            return await Entities.Where(x => x.Name == expression || 
+                                        x.Abrv == expression ||
+                                        expression == null).ToListAsync();
         }
 
         public async Task<IEnumerable<T>> OrderByAsync(Expression<Func<T, object>> sort)

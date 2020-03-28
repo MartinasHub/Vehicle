@@ -29,7 +29,7 @@ namespace Project.MVC.Controllers
             var model = await _vehicleServiceModel.GetAllAsync();
 
             model = await _vehicleServiceModel.FindAllAsync
-                (x => x.VehicleMakes.Name == expression || expression == null);
+                (expression);
 
             switch (sort)
             {

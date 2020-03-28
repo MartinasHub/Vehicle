@@ -11,7 +11,7 @@ namespace Project.Service.VehicleService
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        Task <IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> expression);
+        Task <IEnumerable<T>> FindAllAsync(string expression);
         Task <IEnumerable<T>> OrderByAsync(Expression<Func<T, object>> sort);
         Task <IEnumerable<T>> GetAllAsync();
         Task <T> GetByIdAsync(int id);

@@ -1,4 +1,5 @@
-﻿using Project.MVC.Models;
+﻿using PagedList;
+using Project.MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

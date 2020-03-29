@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using AutoMapper;
 using PagedList;
 using Project.MVC.Models;
 using Project.Service.VehicleService;
@@ -13,27 +14,36 @@ namespace Project.MVC.Controllers
     {
         private IVehicleServiceModel _vehicleServiceModel;
         private IVehicleServiceMake _vehicleServiceMake;
+        private readonly IMapper _mapper;
 
-        public VehicleModelsController(IVehicleServiceModel vehicleServiceModel, IVehicleServiceMake vehicleServiceMake)
+        public VehicleModelsController(IVehicleServiceModel vehicleServiceModel, IVehicleServiceMake vehicleServiceMake,
+            IMapper mapper)
         {
             this._vehicleServiceModel = vehicleServiceModel;
             this._vehicleServiceMake = vehicleServiceMake;
+            this._mapper = mapper;
         }
 
         // GET: VehicleModels
-        public async Task <ActionResult> Index(string expression, string sort, int? page)
+        public async Task<ActionResult> Index(string expression, string sort, int? page)
         {
             ViewBag.SortNameParameter = string.IsNullOrEmpty(sort) ? "Name_desc" : "";
             ViewBag.SortAbrvParameter = sort == "Abrv" ? "Abrv_desc" : "Abrv";
 
-            var model = await _vehicleServiceModel.GetAllAsync();
+            var vehicleModel = await _vehicleServiceModel.GetAllAsync();
 
-            model = await _vehicleServiceModel.FindAllAsync
-                (expression);
+            if (!string.IsNullOrEmpty(expression))
+            {
+                vehicleModel = await _vehicleServiceModel.FindAllAsync
+                    (expression);
+            }
+            else
+            {
+                vehicleModel = await _vehicleServiceModel.OrderByAsync(sort);
+            }
 
-            model = await _vehicleServiceModel.OrderByAsync(sort);
-
-            return View(model.ToPagedList(page ?? 1, 10));
+            var vehicleMapped = _mapper.Map<VehicleModelView>(vehicleModel);
+            return View(vehicleModel.ToPagedList(page ?? 1, 10));
         }
 
         // GET: VehicleModels/Details/5
@@ -69,6 +79,7 @@ namespace Project.MVC.Controllers
             if (ModelState.IsValid)
             {
                 await _vehicleServiceModel.InsertAsync(vehicleModel);
+                var vehicleMapped = _mapper.Map<VehicleModelView>(vehicleModel);
                 return RedirectToAction("Index", "VehicleModels");
             }
 
@@ -102,6 +113,7 @@ namespace Project.MVC.Controllers
             if (ModelState.IsValid)
             {
                 await _vehicleServiceModel.UpdateAsync(vehicleModel);
+                var vehicleMapped = _mapper.Map<VehicleModelView>(vehicleModel);
                 return RedirectToAction("Index", "VehicleModels");
             }
 

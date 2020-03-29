@@ -6,6 +6,7 @@ using Project.MVC.Models;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using PagedList.EntityFramework;
 using PagedList;
 
 namespace Project.Service.VehicleService
@@ -53,6 +54,7 @@ namespace Project.Service.VehicleService
 
         public async Task <IEnumerable<T>> FindAllAsync(string expression)
         {
+            var vehicle = await GetAllAsync();
             return await Entities.Where(x => x.Name == expression || 
                                         x.Abrv == expression ||
                                         expression == null).ToListAsync();
@@ -60,26 +62,26 @@ namespace Project.Service.VehicleService
 
         public async Task<IEnumerable<T>> OrderByAsync(string sort)
         {
-            var model = await GetAllAsync();
+            var vehicle = await GetAllAsync();
 
             switch (sort)
             {
                 case "Name_desc":
-                    model = model.OrderByDescending(m => m.Name);
+                    vehicle = vehicle.OrderByDescending(m => m.Name);
                     break;
                 case "Abrv":
-                    model = model.OrderBy(m => m.Abrv);
+                    vehicle = vehicle.OrderBy(m => m.Abrv);
                     break;
                 case "Abrv_desc":
-                    model = model.OrderByDescending(m => m.Abrv);
+                    vehicle = vehicle.OrderByDescending(m => m.Abrv);
                     break;
                 default:
                 case "Name":
-                    model = model.OrderBy(m => m.Name);
+                    vehicle = vehicle.OrderBy(m => m.Name);
                     break;
             }
 
-            return model;
+            return vehicle;
         }
 
         private IDbSet<T> Entities

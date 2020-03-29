@@ -3,19 +3,20 @@ using System.Net;
 using System.Web.Mvc;
 using Project.MVC.Models;
 using Project.Service.VehicleService;
-using System.Linq;
 using PagedList;
-using PagedList.Mvc;
+using AutoMapper;
 
 namespace Project.MVC.Controllers
 {
     public class VehicleMakesController : Controller
     {
         private IVehicleServiceMake _vehicleServiceMake;
+        private readonly IMapper _mapper;
 
-        public VehicleMakesController(IVehicleServiceMake vehicleServiceMake)
+        public VehicleMakesController(IVehicleServiceMake vehicleServiceMake, IMapper mapper)
         {
             this._vehicleServiceMake = vehicleServiceMake;
+            this._mapper = mapper;
         }
 
         // GET: VehicleMakes
@@ -24,13 +25,19 @@ namespace Project.MVC.Controllers
             ViewBag.SortNameParameter = string.IsNullOrEmpty(sort) ? "Name_desc" : "";
             ViewBag.SortAbrvParameter = sort == "Abrv" ? "Abrv_desc" : "Abrv";
 
-            var model = await _vehicleServiceMake.GetAllAsync();
+            var vehicleMake = await _vehicleServiceMake.GetAllAsync();
 
-            model = await _vehicleServiceMake.FindAllAsync(expression);
+            if (!string.IsNullOrEmpty(expression))
+            {
+                vehicleMake = await _vehicleServiceMake.FindAllAsync(expression);
+            }
+            else
+            {
+                vehicleMake = await _vehicleServiceMake.OrderByAsync(sort);
+            }
 
-            model = await _vehicleServiceMake.OrderByAsync(sort);
-
-            return View(model.ToPagedList(page ?? 1, 10));
+            var vehicleMapped =_mapper.Map<VehicleMakeView>(vehicleMake);
+            return View(vehicleMake.ToPagedList(page ?? 1, 10));
         }
 
         // GET: VehicleMakes/Details/5
@@ -62,9 +69,9 @@ namespace Project.MVC.Controllers
             if (ModelState.IsValid)
             {
                 await _vehicleServiceMake.InsertAsync(vehicleMake);
+                var vehicleMapped = _mapper.Map<VehicleMakeView>(vehicleMake);
                 return RedirectToAction("Index", "VehicleMakes");
             }
-
             return View(vehicleMake);
         }
 
@@ -92,6 +99,7 @@ namespace Project.MVC.Controllers
             if (ModelState.IsValid)
             {
                 await _vehicleServiceMake.UpdateAsync(vehicleMake);
+                var vehicleMapped = _mapper.Map<VehicleMakeView>(vehicleMake);
                 return RedirectToAction("Index", "VehicleMakes");
             }
             return View(vehicleMake);

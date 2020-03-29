@@ -11,6 +11,7 @@ namespace Project.Service.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using Ninject.Web.Common.WebHost;
+    using Project.MVC.App_Start;
     using Project.Service.Base;
     using Project.Service.VehicleService;
 
@@ -42,7 +43,7 @@ namespace Project.Service.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-            var kernel = new StandardKernel();
+            var kernel = new StandardKernel(new AutoMapperModule());
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);

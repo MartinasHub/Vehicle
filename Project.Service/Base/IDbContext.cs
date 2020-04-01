@@ -1,16 +1,11 @@
-﻿using Project.MVC.Models;
-using System;
-using System.Collections.Generic;
+﻿using Project.Service.ServiceModels;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project.Service.Base
 {
     public interface IDbContext
     {
-        IDbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity;
+        IDbSet<TEntity> Set<TEntity>() where TEntity : BaseDomain;
         int SaveChanges();
     }
 }

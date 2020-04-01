@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
-namespace Project.MVC.Models
+namespace Project.Service.ServiceModels
 {
-    public class VehicleMake : BaseEntity
+    public class VehicleMake : BaseDomain
     {
         public virtual ICollection<VehicleModel> VehicleModels { get; set; }
     }

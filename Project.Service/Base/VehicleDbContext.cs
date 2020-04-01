@@ -1,7 +1,8 @@
-﻿using Project.MVC.Models;
+﻿using Project.Service.ServiceModels;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Reflection;
 
@@ -16,25 +17,16 @@ namespace Project.Service.Base
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(type => !String.IsNullOrEmpty(type.Namespace))
-            .Where(type => type.BaseType != null && type.BaseType.IsGenericType &&
-            type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));
-            foreach (var type in typesToRegister)
-            {
-                dynamic configurationInstance = Activator.CreateInstance(type);
-                modelBuilder.Configurations.Add(configurationInstance);
-            }
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
-        public new IDbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity
+        public new IDbSet<TEntity> Set<TEntity>() where TEntity : BaseDomain
         {
             return base.Set<TEntity>();
         }
 
-        public System.Data.Entity.DbSet<Project.MVC.Models.VehicleModel> VehicleModels { get; set; }
+        public DbSet<VehicleModel> VehicleModels { get; set; }
 
-        public System.Data.Entity.DbSet<Project.MVC.Models.VehicleMake> VehicleMakes { get; set; }
+        public DbSet<VehicleMake> VehicleMakes { get; set; }
     }
 }

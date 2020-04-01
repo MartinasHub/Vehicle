@@ -1,22 +1,17 @@
-﻿using PagedList;
-using Project.MVC.Models;
-using System;
+﻿using Project.Service.ServiceModels;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Project.Service.VehicleService
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IRepository<T> where T : BaseDomain
     {
         Task <IEnumerable<T>> FindAllAsync(string expression);
         Task <IEnumerable<T>> OrderByAsync(string sort);
         Task <IEnumerable<T>> GetAllAsync();
         Task <T> GetByIdAsync(int id);
-        Task InsertAsync(T entity);
-        Task UpdateAsync(T entity);
+        Task InsertAsync(T domain);
+        Task UpdateAsync(T domain);
         Task DeleteAsync(int id);
     }
 }

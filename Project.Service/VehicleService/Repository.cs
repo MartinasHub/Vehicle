@@ -2,19 +2,15 @@
 using System.Threading.Tasks;
 using Project.Service.Base;
 using System.Data.Entity;
-using Project.MVC.Models;
-using System;
 using System.Linq;
-using System.Linq.Expressions;
-using PagedList.EntityFramework;
-using PagedList;
+using Project.Service.ServiceModels;
 
 namespace Project.Service.VehicleService
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository<T> : IRepository<T> where T : BaseDomain
     {
         private readonly VehicleDbContext _context;
-        private IDbSet<T> _entities;
+        private IDbSet<T> _TDbSet;
 
         public Repository(VehicleDbContext context)
         {
@@ -23,31 +19,31 @@ namespace Project.Service.VehicleService
 
         public async Task DeleteAsync(int id)
         {
-            T entity = _entities.Find(id);
-            _entities.Remove(entity);
+            T entity = _TDbSet.Find(id);
+            _TDbSet.Remove(entity);
             await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await Entities.ToListAsync();
+            return await _tDbSet.ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await Entities.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
+            return await _tDbSet.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task InsertAsync(T entity)
+        public async Task InsertAsync(T domain)
         {
-            Entities.Add(entity);
+            _tDbSet.Add(domain);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task UpdateAsync(T domain)
         {
-            Entities.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
+            _tDbSet.Attach(domain);
+            _context.Entry(domain).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
         }
@@ -55,7 +51,7 @@ namespace Project.Service.VehicleService
         public async Task <IEnumerable<T>> FindAllAsync(string expression)
         {
             var vehicle = await GetAllAsync();
-            return await Entities.Where(x => x.Name == expression || 
+            return await _tDbSet.Where(x => x.Name == expression || 
                                         x.Abrv == expression ||
                                         expression == null).ToListAsync();
         }
@@ -84,15 +80,15 @@ namespace Project.Service.VehicleService
             return vehicle;
         }
 
-        private IDbSet<T> Entities
+        private IDbSet<T> _tDbSet
         {
             get
             {
-                if(_entities == null)
+                if(_TDbSet == null)
                 {
-                    _entities = _context.Set<T>();
+                    _TDbSet = _context.Set<T>();
                 }
-                return _entities;
+                return _TDbSet;
             }
         }
     }

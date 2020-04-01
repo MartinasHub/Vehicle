@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
-namespace Project.MVC.Models
+namespace Project.Service.ServiceModels
 {
-    public abstract class BaseEntity
+    public abstract class BaseDomain
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

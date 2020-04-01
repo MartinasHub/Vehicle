@@ -5,6 +5,8 @@ using Project.MVC.Models;
 using Project.Service.VehicleService;
 using PagedList;
 using AutoMapper;
+using Project.Service.ServiceModels;
+using System.Collections.Generic;
 
 namespace Project.MVC.Controllers
 {
@@ -36,7 +38,7 @@ namespace Project.MVC.Controllers
                 vehicleMake = await _vehicleServiceMake.OrderByAsync(sort);
             }
 
-            var vehicleMapped =_mapper.Map<VehicleMakeView>(vehicleMake);
+            var vehicleMapped = _mapper.Map<IPagedList<VehicleMakeView>>(vehicleMake);
             return View(vehicleMake.ToPagedList(page ?? 1, 10));
         }
 

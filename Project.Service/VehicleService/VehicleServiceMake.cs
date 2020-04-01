@@ -1,8 +1,5 @@
-﻿using PagedList;
-using Project.MVC.Models;
-using System;
+﻿using Project.Service.ServiceModels;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Project.Service.VehicleService

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Project.Service.ServiceModels;
 
 namespace Project.MVC.Models
 {
@@ -12,5 +9,7 @@ namespace Project.MVC.Models
         public string Abrv { get; set; }
 
         public int MakeId { get; set; }
+
+        public virtual VehicleMakeView VehicleMakes { get; set; }
     }
 }

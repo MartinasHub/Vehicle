@@ -3,10 +3,11 @@ using System.Net;
 using System.Web.Mvc;
 using Project.MVC.Models;
 using Project.Service.VehicleService;
-using PagedList;
 using AutoMapper;
 using Project.Service.ServiceModels;
 using System.Collections.Generic;
+using PagedList;
+using Project.MVC.Models.PagedViewModel;
 
 namespace Project.MVC.Controllers
 {
@@ -38,8 +39,9 @@ namespace Project.MVC.Controllers
                 vehicleMake = await _vehicleServiceMake.OrderByAsync(sort);
             }
 
+            var paging = _vehicleServiceMake.PaginationAsync(page);
             var vehicleMapped = _mapper.Map<IPagedList<VehicleMakeView>>(vehicleMake);
-            return View(vehicleMake.ToPagedList(page ?? 1, 10));
+            return View(vehicleMake);
         }
 
         // GET: VehicleMakes/Details/5
@@ -100,8 +102,8 @@ namespace Project.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _vehicleServiceMake.UpdateAsync(vehicleMake);
                 var vehicleMapped = _mapper.Map<VehicleMakeView>(vehicleMake);
+                await _vehicleServiceMake.UpdateAsync(vehicleMake);
                 return RedirectToAction("Index", "VehicleMakes");
             }
             return View(vehicleMake);

@@ -4,6 +4,7 @@ using Project.Service.Base;
 using System.Data.Entity;
 using System.Linq;
 using Project.Service.ServiceModels;
+using PagedList;
 
 namespace Project.Service.VehicleService
 {
@@ -19,8 +20,8 @@ namespace Project.Service.VehicleService
 
         public async Task DeleteAsync(int id)
         {
-            T entity = _TDbSet.Find(id);
-            _TDbSet.Remove(entity);
+            T domain = _TDbSet.Find(id);
+            _TDbSet.Remove(domain);
             await _context.SaveChangesAsync();
         }
 
@@ -78,6 +79,12 @@ namespace Project.Service.VehicleService
             }
 
             return vehicle;
+        }
+
+        public async Task<IEnumerable<T>> PaginationAsync(int? page)
+        {
+            var vehicle = await GetAllAsync();
+            return _tDbSet.ToPagedList(page ?? 1, 10);
         }
 
         private IDbSet<T> _tDbSet

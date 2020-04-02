@@ -2,11 +2,12 @@
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
-using PagedList;
 using Project.MVC.Models;
 using Project.Service.VehicleService;
 using Project.Service.ServiceModels;
 using System.Collections.Generic;
+using PagedList;
+using Project.MVC.Models.PagedViewModel;
 
 namespace Project.MVC.Controllers
 {
@@ -42,8 +43,9 @@ namespace Project.MVC.Controllers
                 vehicleModel = await _vehicleServiceModel.OrderByAsync(sort);
             }
 
-            var vehicleMapped = _mapper.Map<IPagedList<VehicleModelView>>(vehicleModel);
-            return View(vehicleModel.ToPagedList(page ?? 1, 10));
+            var paging = _vehicleServiceModel.PaginationAsync(page);
+            var vehicleMapped = _mapper.Map<PagedViewModel<VehicleModelView>>(vehicleModel);
+            return View(vehicleModel);
         }
 
         // GET: VehicleModels/Details/5

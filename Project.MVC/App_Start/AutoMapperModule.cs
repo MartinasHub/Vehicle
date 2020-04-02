@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Ninject;
 using Ninject.Modules;
+using PagedList;
 using Project.MVC.Models;
+using Project.MVC.Models.PagedViewModel;
 using Project.Service.ServiceModels;
+using System;
 
 namespace Project.MVC.App_Start
 {
@@ -23,6 +26,7 @@ namespace Project.MVC.App_Start
             {
                 cfg.CreateMap<VehicleMake, VehicleMakeView>().ReverseMap();
                 cfg.CreateMap<VehicleModel, VehicleModelView>().ReverseMap();
+                cfg.CreateMap(typeof(IPagedList<>), typeof(PagedViewModel<>)).ConvertUsing(typeof(Converter<,>));
             });
 
             config.AssertConfigurationIsValid();

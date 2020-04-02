@@ -1,4 +1,5 @@
-﻿using Project.Service.ServiceModels;
+﻿using PagedList;
+using Project.Service.ServiceModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -41,6 +42,11 @@ namespace Project.Service.VehicleService
         public async Task<IEnumerable<VehicleMake>> OrderByAsync(string sort)
         {
             return await _repository.OrderByAsync(sort);
+        }
+
+        public async Task<IEnumerable<VehicleMake>> PaginationAsync(int? page)
+        {
+            return await _repository.PaginationAsync(page);
         }
 
         public async Task UpdateAsync(VehicleMake vehicleMake)

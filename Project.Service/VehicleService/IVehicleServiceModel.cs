@@ -1,4 +1,5 @@
-﻿using Project.Service.ServiceModels;
+﻿using PagedList;
+using Project.Service.ServiceModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace Project.Service.VehicleService
@@ -12,5 +13,6 @@ namespace Project.Service.VehicleService
         Task InsertAsync(VehicleModel vehicleModel);
         Task UpdateAsync(VehicleModel vehicleModel);
         Task DeleteAsync(int id);
+        Task<IEnumerable<VehicleModel>> PaginationAsync(int? page);
     }
 }

@@ -108,7 +108,7 @@
     <Compile Include="Base\VehicleDbContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceModels\BaseEntity.cs" />
+    <Compile Include="ServiceModels\BaseDomain.cs" />
     <Compile Include="ServiceModels\VehicleMake.cs" />
     <Compile Include="ServiceModels\VehicleModel.cs" />
     <Compile Include="VehicleService\IRepository.cs" />

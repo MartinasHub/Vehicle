@@ -1,7 +1,4 @@
-﻿@using PagedList;
-@using PagedList.Mvc;
-
-@model IPagedList<Project.MVC.Models.VehicleModelView>
+﻿@model IEnumerable<Project.Service.ServiceModels.VehicleModel>
 
 @{
     ViewBag.Title = "Index";
@@ -65,5 +62,3 @@
 </table>
 
 <br />
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page, expression = Request.QueryString["expression"], sort = Request["sort"] }),
-    new PagedListRenderOptions() { Display = PagedListDisplayMode.Always})

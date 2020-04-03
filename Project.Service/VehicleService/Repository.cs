@@ -84,7 +84,13 @@ namespace Project.Service.VehicleService
         public async Task<IEnumerable<T>> PaginationAsync(int? page)
         {
             var vehicle = await GetAllAsync();
-            return _tDbSet.ToPagedList(page ?? 1, 10);
+
+            const int pageSize = 10;
+            await _tDbSet.OrderBy(x => x.Name)
+                .Skip((page ?? 0) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+            return vehicle;
         }
 
         private IDbSet<T> _tDbSet

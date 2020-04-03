@@ -1,13 +1,12 @@
 ﻿using Project.Service.ServiceModels;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Project.MVC.Models
 {
-    public class VehicleModelView
+    public class VehicleModelView : BaseView
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Abrv { get; set; }
-
+        [Display(Name = "Vehicle")]
         public int MakeId { get; set; }
 
         public virtual VehicleMakeView VehicleMakes { get; set; }

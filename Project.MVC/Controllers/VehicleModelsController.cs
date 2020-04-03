@@ -7,7 +7,6 @@ using Project.Service.VehicleService;
 using Project.Service.ServiceModels;
 using System.Collections.Generic;
 using PagedList;
-using Project.MVC.Models.PagedViewModel;
 
 namespace Project.MVC.Controllers
 {
@@ -43,8 +42,8 @@ namespace Project.MVC.Controllers
                 vehicleModel = await _vehicleServiceModel.OrderByAsync(sort);
             }
 
-            var paging = _vehicleServiceModel.PaginationAsync(page);
-            var vehicleMapped = _mapper.Map<PagedViewModel<VehicleModelView>>(vehicleModel);
+            await _vehicleServiceModel.PaginationAsync(page);
+            var vehicleMapped = _mapper.Map<IEnumerable<VehicleModelView>>(vehicleModel);
             return View(vehicleModel);
         }
 

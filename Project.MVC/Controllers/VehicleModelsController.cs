@@ -6,7 +6,6 @@ using Project.MVC.Models;
 using Project.Service.VehicleService;
 using Project.Service.ServiceModels;
 using System.Collections.Generic;
-using PagedList;
 using Project.MVC.SearchSortPage;
 using System;
 

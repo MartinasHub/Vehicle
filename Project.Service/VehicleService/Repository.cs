@@ -4,12 +4,11 @@ using Project.Service.Base;
 using System.Data.Entity;
 using System.Linq;
 using Project.Service.ServiceModels;
-using PagedList;
 using System;
 
 namespace Project.Service.VehicleService
 {
-    public class Repository<T> : IRepository<T> where T : BaseDomain
+    public class Repository<T> : IRepository<T> where T : class, IBaseDomain
     {
         private readonly VehicleDbContext _context;
         private IDbSet<T> _TDbSet;

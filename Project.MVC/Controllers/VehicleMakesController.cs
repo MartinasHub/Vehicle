@@ -6,9 +6,7 @@ using Project.Service.VehicleService;
 using AutoMapper;
 using Project.Service.ServiceModels;
 using System.Collections.Generic;
-using PagedList;
 using Project.MVC.SearchSortPage;
-using System.Collections;
 using System;
 
 namespace Project.MVC.Controllers

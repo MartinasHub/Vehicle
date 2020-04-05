@@ -20,7 +20,7 @@ namespace Project.Service.Base
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
-        public new IDbSet<TEntity> Set<TEntity>() where TEntity : BaseDomain
+        public new IDbSet<TEntity> Set<TEntity>() where TEntity : class, IBaseDomain
         {
             return base.Set<TEntity>();
         }

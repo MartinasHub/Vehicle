@@ -5,7 +5,7 @@ namespace Project.Service.Base
 {
     public interface IDbContext
     {
-        IDbSet<TEntity> Set<TEntity>() where TEntity : BaseDomain;
+        IDbSet<TEntity> Set<TEntity>() where TEntity : class, IBaseDomain;
         int SaveChanges();
     }
 }

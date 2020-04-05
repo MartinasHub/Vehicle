@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Ninject;
 using Ninject.Modules;
-using PagedList;
 using Project.MVC.Models;
 using Project.Service.ServiceModels;
 using System;

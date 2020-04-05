@@ -1,11 +1,10 @@
-﻿using PagedList;
-using Project.Service.ServiceModels;
+﻿using Project.Service.ServiceModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Project.Service.VehicleService
 {
-    public interface IRepository<T> where T : BaseDomain
+    public interface IRepository<T> where T : IBaseDomain
     {
         Task <IEnumerable<T>> FindAllAsync(string expression);
         Task <IEnumerable<T>> OrderByAsync(string sort);

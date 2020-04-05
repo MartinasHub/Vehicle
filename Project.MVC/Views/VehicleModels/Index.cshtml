@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Project.Service.ServiceModels.VehicleModel>
+﻿@model IEnumerable<Project.MVC.Models.VehicleModelView>
 
 @{
     ViewBag.Title = "Index";
@@ -28,7 +28,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+            @Html.DisplayNameFor(model => model.VehicleMakes.Name)
         </th>
         <th>
             @Html.ActionLink("Name", "Index", new { sort = ViewBag.SortNameParameter })

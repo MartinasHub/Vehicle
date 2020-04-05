@@ -23,8 +23,12 @@ namespace Project.MVC.App_Start
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<VehicleMake, VehicleMakeView>().ReverseMap();
-                cfg.CreateMap<VehicleModel, VehicleModelView>().ReverseMap();
+                cfg.CreateMap<VehicleMake, VehicleMakeView>()
+                .ForMember(m => m.VehicleModels, m => m.Ignore())
+                .ReverseMap();
+                cfg.CreateMap<VehicleModel, VehicleModelView>()
+                .ForMember(m => m.MakeId, m => m.MapFrom(map => map.VehicleMakes.Id))
+                .ReverseMap();
             });
 
             config.AssertConfigurationIsValid();

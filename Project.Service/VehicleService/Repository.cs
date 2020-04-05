@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using Project.Service.ServiceModels;
 using PagedList;
+using System;
 
 namespace Project.Service.VehicleService
 {
@@ -51,10 +52,13 @@ namespace Project.Service.VehicleService
 
         public async Task <IEnumerable<T>> FindAllAsync(string expression)
         {
-            var vehicle = await GetAllAsync();
-            return await _tDbSet.Where(x => x.Name == expression || 
-                                        x.Abrv == expression ||
+            if (!String.IsNullOrEmpty(expression))
+            {
+                await _tDbSet.Where(x => x.Name == expression ||
+                                         x.Abrv == expression ||
                                         expression == null).ToListAsync();
+            }
+            return await GetAllAsync();
         }
 
         public async Task<IEnumerable<T>> OrderByAsync(string sort)

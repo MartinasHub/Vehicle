@@ -7,6 +7,9 @@ using AutoMapper;
 using Project.Service.ServiceModels;
 using System.Collections.Generic;
 using PagedList;
+using Project.MVC.SearchSortPage;
+using System.Collections;
+using System;
 
 namespace Project.MVC.Controllers
 {
@@ -24,23 +27,20 @@ namespace Project.MVC.Controllers
         // GET: VehicleMakes
         public async Task<ActionResult> Index(string expression, string sort, int? page)
         {
-            ViewBag.SortNameParameter = string.IsNullOrEmpty(sort) ? "Name_desc" : "";
+            ViewBag.SortNameParameter = String.IsNullOrEmpty(sort) ? "Name_desc" : "";
             ViewBag.SortAbrvParameter = sort == "Abrv" ? "Abrv_desc" : "Abrv";
 
             var vehicleMake = await _vehicleServiceMake.GetAllAsync();
 
-            if (!string.IsNullOrEmpty(expression))
-            {
-                vehicleMake = await _vehicleServiceMake.FindAllAsync(expression);
-            }
-            else
-            {
-                vehicleMake = await _vehicleServiceMake.OrderByAsync(sort);
-            }
+            Searching searching = new Searching();
+            await _vehicleServiceMake.FindAllAsync(searching.expression);
+            Sorting sorting = new Sorting();
+            await _vehicleServiceMake.OrderByAsync(sorting.sort);
+            Paging paging = new Paging();
+            await _vehicleServiceMake.PaginationAsync(paging.page);
 
-            await _vehicleServiceMake.PaginationAsync(page);
             var vehicleMapped = _mapper.Map<IEnumerable<VehicleMakeView>>(vehicleMake);
-            return View(vehicleMake);
+            return View(vehicleMapped);
         }
 
         // GET: VehicleMakes/Details/5
@@ -52,11 +52,12 @@ namespace Project.MVC.Controllers
             }
 
             VehicleMake vehicleMake = await _vehicleServiceMake.GetByIdAsync(id.Value);
+            var vehicleMapped = _mapper.Map<VehicleMakeView>(vehicleMake);
             if (vehicleMake == null)
             {
                 return HttpNotFound();
             }
-            return View(vehicleMake);
+            return View(vehicleMapped);
         }
 
         // GET: VehicleMakes/Create
@@ -87,12 +88,13 @@ namespace Project.MVC.Controllers
             }
 
             VehicleMake vehicleMake = await _vehicleServiceMake.GetByIdAsync(id.Value);
+            var vehicleMapped = _mapper.Map<VehicleMakeView>(vehicleMake);
 
             if (vehicleMake == null)
             {
                 return HttpNotFound();
             }
-            return View(vehicleMake);
+            return View(vehicleMapped);
         }
 
         [HttpPost]
@@ -102,7 +104,6 @@ namespace Project.MVC.Controllers
             if (ModelState.IsValid)
             {
                 await _vehicleServiceMake.UpdateAsync(vehicleMake);
-                var vehicleMapped = _mapper.Map<VehicleMakeView>(vehicleMake);
                 return RedirectToAction("Index", "VehicleMakes");
             }
             return View(vehicleMake);
@@ -122,7 +123,9 @@ namespace Project.MVC.Controllers
             {
                 return HttpNotFound();
             }
-            return View(vehicleMake);
+
+            var vehicleMapped = _mapper.Map<VehicleMakeView>(vehicleMake);
+            return View(vehicleMapped);
         }
 
         // POST: VehicleMakes/Delete/5

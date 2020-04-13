@@ -7,6 +7,6 @@ namespace Project.MVC.SearchSortPage
 {
     public class Searching
     {
-        public string expression { get; set; }
+        public string Search { get; set; }
     }
 }

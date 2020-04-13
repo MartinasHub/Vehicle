@@ -5,13 +5,10 @@ namespace Project.Service.VehicleService
 {
     public interface IVehicleServiceModel
     {
-        Task<IEnumerable<VehicleModel>> FindAllAsync(string expression);
-        Task<IEnumerable<VehicleModel>> OrderByAsync(string sort);
-        Task<IEnumerable<VehicleModel>> GetAllAsync();
+        Task<IEnumerable<VehicleModel>> GetAllAsync(string search, string sort, int? page);
         Task<VehicleModel> GetByIdAsync(int id);
         Task InsertAsync(VehicleModel vehicleModel);
         Task UpdateAsync(VehicleModel vehicleModel);
         Task DeleteAsync(int id);
-        Task<IEnumerable<VehicleModel>> PaginationAsync(int? page);
     }
 }

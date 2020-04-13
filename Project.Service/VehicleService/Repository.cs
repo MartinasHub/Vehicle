@@ -27,8 +27,6 @@ namespace Project.Service.VehicleService
 
         public async Task<IEnumerable<T>> GetAllAsync(string search, string sort, int? page)
         {
-            var vehicles = await _tDbSet.ToListAsync();
-
             var vehicle = from v in _tDbSet
                           select v;
 

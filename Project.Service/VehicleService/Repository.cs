@@ -25,9 +25,40 @@ namespace Project.Service.VehicleService
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync(string search, string sort, int? page)
         {
-            return await _tDbSet.ToListAsync();
+            var vehicles = await _tDbSet.ToListAsync();
+
+            var vehicle = from v in _tDbSet.AsQueryable()
+                          select v;
+
+            const int pageSize = 10;
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                vehicle = vehicle.Where(x => x.Name == search ||
+                                         x.Abrv == search ||
+                                         search == null);
+            }
+
+            switch (sort)
+            {
+                    case "Name_desc":
+                        vehicle = vehicle.OrderByDescending(m => m.Name);
+                        break;
+                    case "Abrv":
+                        vehicle = vehicle.OrderBy(m => m.Abrv);
+                        break;
+                    case "Abrv_desc":
+                        vehicle = vehicle.OrderByDescending(m => m.Abrv);
+                        break;
+                    default:
+                    case "Name":
+                        vehicle = vehicle.OrderBy(m => m.Name);
+                        break;
+            }
+
+            return await vehicle.OrderBy(x => x.Name).Skip((page ?? 0) * pageSize).Take(pageSize).ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)
@@ -47,53 +78,6 @@ namespace Project.Service.VehicleService
             _context.Entry(domain).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
-        }
-
-        public async Task <IEnumerable<T>> FindAllAsync(string expression)
-        {
-            if (!String.IsNullOrEmpty(expression))
-            {
-                await _tDbSet.Where(x => x.Name == expression ||
-                                         x.Abrv == expression ||
-                                        expression == null).ToListAsync();
-            }
-            return await GetAllAsync();
-        }
-
-        public async Task<IEnumerable<T>> OrderByAsync(string sort)
-        {
-            var vehicle = await GetAllAsync();
-
-            switch (sort)
-            {
-                case "Name_desc":
-                    vehicle = vehicle.OrderByDescending(m => m.Name);
-                    break;
-                case "Abrv":
-                    vehicle = vehicle.OrderBy(m => m.Abrv);
-                    break;
-                case "Abrv_desc":
-                    vehicle = vehicle.OrderByDescending(m => m.Abrv);
-                    break;
-                default:
-                case "Name":
-                    vehicle = vehicle.OrderBy(m => m.Name);
-                    break;
-            }
-
-            return vehicle;
-        }
-
-        public async Task<IEnumerable<T>> PaginationAsync(int? page)
-        {
-            var vehicle = await GetAllAsync();
-
-            const int pageSize = 10;
-            await _tDbSet.OrderBy(x => x.Name)
-                .Skip((page ?? 0) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-            return vehicle;
         }
 
         private IDbSet<T> _tDbSet

@@ -7,6 +7,6 @@ namespace Project.MVC.SearchSortPage
 {
     public class Paging
     {
-        public int? page { get; set; }
+        public int? Page { get; set; }
     }
 }

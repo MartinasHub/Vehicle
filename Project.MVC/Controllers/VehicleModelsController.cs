@@ -26,21 +26,17 @@ namespace Project.MVC.Controllers
         }
 
         // GET: VehicleModels
-        public async Task<ActionResult> Index(string expression, string sort, int? page)
+        public async Task<ActionResult> Index(string search, string sort, int? page)
         {
             ViewBag.SortNameParameter = String.IsNullOrEmpty(sort) ? "Name_desc" : "";
             ViewBag.SortAbrvParameter = sort == "Abrv" ? "Abrv_desc" : "Abrv";
 
-            var vehicleModel = await _vehicleServiceModel.GetAllAsync();
-
             Searching searching = new Searching();
-            await _vehicleServiceModel.FindAllAsync(searching.expression);
             Sorting sorting = new Sorting();
-            await _vehicleServiceModel.OrderByAsync(sorting.sort);
             Paging paging = new Paging();
-            await _vehicleServiceModel.PaginationAsync(paging.page);
 
-            var vehicleMapped = _mapper.Map<IEnumerable<VehicleModelView>>(vehicleModel);
+            var vehicleMapped = _mapper.Map<IEnumerable<VehicleModelView>>(await _vehicleServiceModel.GetAllAsync(searching.Search,
+                                                                                    sorting.Sort, paging.Page));
             return View(vehicleMapped);
         }
 
@@ -65,8 +61,12 @@ namespace Project.MVC.Controllers
 
         // GET: VehicleModels/Create
         public async Task <ActionResult> Create()
-        { 
-            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(), "Id", "Name");
+        {
+            Searching searching = new Searching();
+            Sorting sorting = new Sorting();
+            Paging paging = new Paging();
+            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(searching.Search, sorting.Sort,
+                                                                                    paging.Page), "Id", "Name");
             return View();
         }
 
@@ -81,7 +81,11 @@ namespace Project.MVC.Controllers
                 return RedirectToAction("Index", "VehicleModels");
             }
 
-            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(), "Id", "Name", vehicleModel.MakeId);
+            Searching searching = new Searching();
+            Sorting sorting = new Sorting();
+            Paging paging = new Paging();
+            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(searching.Search, sorting.Sort,
+                                                                                    paging.Page), "Id", "Name", vehicleModel.MakeId);
             return View(vehicleModel);
         }
 
@@ -100,7 +104,11 @@ namespace Project.MVC.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(), "Id", "Name", vehicleModel.MakeId);
+            Searching searching = new Searching();
+            Sorting sorting = new Sorting();
+            Paging paging = new Paging();
+            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(searching.Search, sorting.Sort,
+                                                                                    paging.Page), "Id", "Name", vehicleModel.MakeId);
             var vehicleMapped = _mapper.Map<VehicleModelView>(vehicleModel);
             return View(vehicleMapped);
         }
@@ -115,7 +123,11 @@ namespace Project.MVC.Controllers
                 return RedirectToAction("Index", "VehicleModels");
             }
 
-            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(), "Id", "Name", vehicleModel.MakeId);
+            Searching searching = new Searching();
+            Sorting sorting = new Sorting();
+            Paging paging = new Paging();
+            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(searching.Search, sorting.Sort,
+                                                                                    paging.Page), "Id", "Name", vehicleModel.MakeId);
             return View(vehicleModel);
         }
 

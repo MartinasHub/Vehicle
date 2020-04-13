@@ -29,7 +29,7 @@ namespace Project.Service.VehicleService
         {
             var vehicles = await _tDbSet.ToListAsync();
 
-            var vehicle = from v in _tDbSet.AsQueryable()
+            var vehicle = from v in _tDbSet
                           select v;
 
             const int pageSize = 10;

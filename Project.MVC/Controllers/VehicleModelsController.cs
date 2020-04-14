@@ -34,9 +34,11 @@ namespace Project.MVC.Controllers
             Searching searching = new Searching();
             Sorting sorting = new Sorting();
             Paging paging = new Paging();
+            searching.Search = search;
+            sorting.Sort = sort;
+            paging.Page = page;
 
-            var vehicleMapped = _mapper.Map<IEnumerable<VehicleModelView>>(await _vehicleServiceModel.GetAllAsync(searching.Search,
-                                                                                    sorting.Sort, paging.Page));
+            var vehicleMapped = _mapper.Map<IEnumerable<VehicleModelView>>(await _vehicleServiceModel.GetAllAsync(search, sort, page));
             return View(vehicleMapped);
         }
 
@@ -60,19 +62,21 @@ namespace Project.MVC.Controllers
         }
 
         // GET: VehicleModels/Create
-        public async Task <ActionResult> Create()
+        public async Task <ActionResult> Create(string search, string sort, int? page)
         {
             Searching searching = new Searching();
             Sorting sorting = new Sorting();
             Paging paging = new Paging();
-            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(searching.Search, sorting.Sort,
-                                                                                    paging.Page), "Id", "Name");
+            searching.Search = search;
+            sorting.Sort = sort;
+            paging.Page = page;
+            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(search, sort, page), "Id", "Name");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task <ActionResult> Create(VehicleModel vehicleModel)
+        public async Task <ActionResult> Create(VehicleModel vehicleModel, string search, string sort, int? page)
         {
             if (ModelState.IsValid)
             {
@@ -84,13 +88,15 @@ namespace Project.MVC.Controllers
             Searching searching = new Searching();
             Sorting sorting = new Sorting();
             Paging paging = new Paging();
-            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(searching.Search, sorting.Sort,
-                                                                                    paging.Page), "Id", "Name", vehicleModel.MakeId);
+            searching.Search = search;
+            sorting.Sort = sort;
+            paging.Page = page;
+            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(search, sort, page), "Id", "Name", vehicleModel.MakeId);
             return View(vehicleModel);
         }
 
         // GET: VehicleModels/Edit/5
-        public async Task <ActionResult> Edit(int? id)
+        public async Task <ActionResult> Edit(int? id, string search, string sort, int? page)
         {
             if (id == null)
             {
@@ -107,15 +113,17 @@ namespace Project.MVC.Controllers
             Searching searching = new Searching();
             Sorting sorting = new Sorting();
             Paging paging = new Paging();
-            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(searching.Search, sorting.Sort,
-                                                                                    paging.Page), "Id", "Name", vehicleModel.MakeId);
+            searching.Search = search;
+            sorting.Sort = sort;
+            paging.Page = page;
+            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(search, sort, page), "Id", "Name", vehicleModel.MakeId);
             var vehicleMapped = _mapper.Map<VehicleModelView>(vehicleModel);
             return View(vehicleMapped);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task <ActionResult> Edit(VehicleModel vehicleModel)
+        public async Task <ActionResult> Edit(VehicleModel vehicleModel, string sort, string search, int? page)
         {
             if (ModelState.IsValid)
             {
@@ -126,8 +134,10 @@ namespace Project.MVC.Controllers
             Searching searching = new Searching();
             Sorting sorting = new Sorting();
             Paging paging = new Paging();
-            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(searching.Search, sorting.Sort,
-                                                                                    paging.Page), "Id", "Name", vehicleModel.MakeId);
+            searching.Search = search;
+            sorting.Sort = sort;
+            paging.Page = page;
+            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(search, sort, page), "Id", "Name", vehicleModel.MakeId);
             return View(vehicleModel);
         }
 

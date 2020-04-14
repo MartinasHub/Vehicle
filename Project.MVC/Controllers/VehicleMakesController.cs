@@ -31,8 +31,11 @@ namespace Project.MVC.Controllers
             Searching searching = new Searching();
             Sorting sorting = new Sorting();
             Paging paging = new Paging();
+            searching.Search = search;
+            sorting.Sort = sort;
+            paging.Page = page;
 
-            var vehicleMapped = _mapper.Map<IEnumerable<VehicleMakeView>>(await _vehicleServiceMake.GetAllAsync(searching.Search, sorting.Sort, paging.Page));
+            var vehicleMapped = _mapper.Map<IEnumerable<VehicleMakeView>>(await _vehicleServiceMake.GetAllAsync(search, sort, page));
             return View(vehicleMapped);
         }
 

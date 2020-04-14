@@ -38,9 +38,10 @@ namespace Project.Service.VehicleService
                                          x.Abrv == search ||
                                          search == null);
             }
-
-            switch (sort)
+            else
             {
+                switch (sort)
+                {
                     case "Name_desc":
                         vehicle = vehicle.OrderByDescending(m => m.Name);
                         break;
@@ -54,9 +55,10 @@ namespace Project.Service.VehicleService
                     case "Name":
                         vehicle = vehicle.OrderBy(m => m.Name);
                         break;
+                }
             }
-
-            return await vehicle.OrderBy(x => x.Name).Skip((page ?? 0) * pageSize).Take(pageSize).ToListAsync();
+            await vehicle.OrderBy(x => x.Name).Skip((page ?? 0) * pageSize).Take(pageSize).ToListAsync();
+            return vehicle;
         }
 
         public async Task<T> GetByIdAsync(int id)

@@ -26,19 +26,19 @@ namespace Project.MVC.Controllers
         }
 
         // GET: VehicleModels
-        public async Task<ActionResult> Index(string search, string sort, int? page)
+        public async Task<ActionResult> Index(string search, string sortOrder, int? page)
         {
-            ViewBag.SortNameParameter = String.IsNullOrEmpty(sort) ? "Name_desc" : "";
-            ViewBag.SortAbrvParameter = sort == "Abrv" ? "Abrv_desc" : "Abrv";
+            ViewBag.SortNameParameter = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+            ViewBag.SortAbrvParameter = sortOrder == "Abrv" ? "Abrv_desc" : "Abrv";
 
             Searching searching = new Searching();
             Sorting sorting = new Sorting();
             Paging paging = new Paging();
             searching.Search = search;
-            sorting.Sort = sort;
+            sorting.SortOrder = sortOrder;
             paging.Page = page;
 
-            var vehicleMapped = _mapper.Map<IEnumerable<VehicleModelView>>(await _vehicleServiceModel.GetAllAsync(search, sort, page));
+            var vehicleMapped = _mapper.Map<IEnumerable<VehicleModelView>>(await _vehicleServiceModel.GetAllAsync(search, sortOrder, page));
             return View(vehicleMapped);
         }
 
@@ -62,21 +62,21 @@ namespace Project.MVC.Controllers
         }
 
         // GET: VehicleModels/Create
-        public async Task <ActionResult> Create(string search, string sort, int? page)
+        public async Task <ActionResult> Create(string search, string sortOrder, int? page)
         {
             Searching searching = new Searching();
             Sorting sorting = new Sorting();
             Paging paging = new Paging();
             searching.Search = search;
-            sorting.Sort = sort;
+            sorting.SortOrder = sortOrder;
             paging.Page = page;
-            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(search, sort, page), "Id", "Name");
+            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(search, sortOrder, page), "Id", "Name");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task <ActionResult> Create(VehicleModel vehicleModel, string search, string sort, int? page)
+        public async Task <ActionResult> Create(VehicleModel vehicleModel, string search, string sortOrder, int? page)
         {
             if (ModelState.IsValid)
             {
@@ -89,14 +89,14 @@ namespace Project.MVC.Controllers
             Sorting sorting = new Sorting();
             Paging paging = new Paging();
             searching.Search = search;
-            sorting.Sort = sort;
+            sorting.SortOrder = sortOrder;
             paging.Page = page;
-            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(search, sort, page), "Id", "Name", vehicleModel.MakeId);
+            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(search, sortOrder, page), "Id", "Name", vehicleModel.MakeId);
             return View(vehicleModel);
         }
 
         // GET: VehicleModels/Edit/5
-        public async Task <ActionResult> Edit(int? id, string search, string sort, int? page)
+        public async Task <ActionResult> Edit(int? id, string search, string sortOrder, int? page)
         {
             if (id == null)
             {
@@ -114,16 +114,16 @@ namespace Project.MVC.Controllers
             Sorting sorting = new Sorting();
             Paging paging = new Paging();
             searching.Search = search;
-            sorting.Sort = sort;
+            sorting.SortOrder = sortOrder;
             paging.Page = page;
-            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(search, sort, page), "Id", "Name", vehicleModel.MakeId);
+            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(search, sortOrder, page), "Id", "Name", vehicleModel.MakeId);
             var vehicleMapped = _mapper.Map<VehicleModelView>(vehicleModel);
             return View(vehicleMapped);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task <ActionResult> Edit(VehicleModel vehicleModel, string sort, string search, int? page)
+        public async Task <ActionResult> Edit(VehicleModel vehicleModel, string sortOrder, string search, int? page)
         {
             if (ModelState.IsValid)
             {
@@ -135,9 +135,9 @@ namespace Project.MVC.Controllers
             Sorting sorting = new Sorting();
             Paging paging = new Paging();
             searching.Search = search;
-            sorting.Sort = sort;
+            sorting.SortOrder = sortOrder;
             paging.Page = page;
-            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(search, sort, page), "Id", "Name", vehicleModel.MakeId);
+            ViewBag.MakeId = new SelectList(await _vehicleServiceMake.GetAllAsync(search, sortOrder, page), "Id", "Name", vehicleModel.MakeId);
             return View(vehicleModel);
         }
 

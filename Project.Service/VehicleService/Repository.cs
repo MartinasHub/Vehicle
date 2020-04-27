@@ -25,7 +25,7 @@ namespace Project.Service.VehicleService
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(string search, string sort, int? page)
+        public async Task<IEnumerable<T>> GetAllAsync(string search, string sortOrder, int? page)
         {
             var vehicle = from v in _tDbSet
                           select v;
@@ -40,7 +40,7 @@ namespace Project.Service.VehicleService
             }
             else
             {
-                switch (sort)
+                switch (sortOrder)
                 {
                     case "Name_desc":
                         vehicle = vehicle.OrderByDescending(m => m.Name);

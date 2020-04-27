@@ -23,19 +23,19 @@ namespace Project.MVC.Controllers
         }
 
         // GET: VehicleMakes
-        public async Task<ActionResult> Index(string search, string sort, int? page)
+        public async Task<ActionResult> Index(string search, string sortOrder, int? page)
         {
-            ViewBag.SortNameParameter = String.IsNullOrEmpty(sort) ? "Name_desc" : "";
-            ViewBag.SortAbrvParameter = sort == "Abrv" ? "Abrv_desc" : "Abrv";
+            ViewBag.SortNameParameter = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+            ViewBag.SortAbrvParameter = sortOrder == "Abrv" ? "Abrv_desc" : "Abrv";
 
             Searching searching = new Searching();
             Sorting sorting = new Sorting();
             Paging paging = new Paging();
             searching.Search = search;
-            sorting.Sort = sort;
+            sorting.SortOrder = sortOrder;
             paging.Page = page;
 
-            var vehicleMapped = _mapper.Map<IEnumerable<VehicleMakeView>>(await _vehicleServiceMake.GetAllAsync(search, sort, page));
+            var vehicleMapped = _mapper.Map<IEnumerable<VehicleMakeView>>(await _vehicleServiceMake.GetAllAsync(search, sortOrder, page));
             return View(vehicleMapped);
         }
 

@@ -7,6 +7,6 @@ namespace Project.MVC.SearchSortPage
 {
     public class Sorting
     {
-        public string Sort { get; set; }
+        public string SortOrder { get; set; }
     }
 }

@@ -5,7 +5,7 @@ namespace Project.Service.VehicleService
 {
     public interface IVehicleServiceModel
     {
-        Task<IEnumerable<VehicleModel>> GetAllAsync(string search, string sort, int? page);
+        Task<IEnumerable<VehicleModel>> GetAllAsync(string search, string sortOrder, int? page);
         Task<VehicleModel> GetByIdAsync(int id);
         Task InsertAsync(VehicleModel vehicleModel);
         Task UpdateAsync(VehicleModel vehicleModel);

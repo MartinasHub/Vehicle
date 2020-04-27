@@ -18,9 +18,9 @@ namespace Project.Service.VehicleService
             await _repository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<VehicleMake>> GetAllAsync(string search, string sort, int? page)
+        public async Task<IEnumerable<VehicleMake>> GetAllAsync(string search, string sortOrder, int? page)
         {
-            return await _repository.GetAllAsync(search, sort, page);
+            return await _repository.GetAllAsync(search, sortOrder, page);
         }
 
         public async Task<VehicleMake> GetByIdAsync(int id)

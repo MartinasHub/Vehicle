@@ -5,7 +5,7 @@ namespace Project.MVC.App_Start
 {
     using System;
     using System.Web;
-
+    using System.Web.Http;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;

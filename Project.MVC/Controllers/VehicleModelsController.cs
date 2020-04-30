@@ -24,6 +24,7 @@ namespace Project.MVC.Controllers
             this._mapper = mapper;
         }
 
+        [AcceptVerbs("GET", "POST")]
         [HttpGet]
         // GET /api/VehicleModels
         public async Task<IHttpActionResult> Index(string search, string sortOrder, int? page)

@@ -21,8 +21,9 @@ namespace Project.MVC.Controllers
             this._mapper = mapper;
         }
 
-        [HttpGet]
         // GET /api/VehicleMakes
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
         public async Task<IHttpActionResult> Get(string search, string sortOrder, int? page)
         {
             //ViewBag.SortNameParameter = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";

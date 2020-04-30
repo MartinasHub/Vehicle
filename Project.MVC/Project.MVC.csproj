@@ -218,7 +218,6 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="App_Start\WebApiConfig2.cs" />
     <Compile Include="Controllers\VehicleMakesController.cs" />
     <Compile Include="Controllers\VehicleModelsController.cs" />
     <Compile Include="Global.asax.cs">

@@ -1,6 +1,6 @@
-﻿using Project.Model.Common;
+﻿using Project.DAL;
+using Project.Model.Common;
 using Project.Repository.Common;
-using Project.Service.Base;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;

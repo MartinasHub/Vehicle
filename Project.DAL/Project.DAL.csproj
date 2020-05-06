@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{693FB151-0008-40F7-8357-E2760AC8F3B3}</ProjectGuid>
+    <ProjectGuid>{5B08EC87-3092-4695-B4E0-68D36997A497}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Project.Repository</RootNamespace>
-    <AssemblyName>Project.Repository</AssemblyName>
+    <RootNamespace>Project.DAL</RootNamespace>
+    <AssemblyName>Project.DAL</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -51,30 +51,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IDbContext.cs" />
+    <Compile Include="Migrations\202005061928095_InitialModel.cs" />
+    <Compile Include="Migrations\202005061928095_InitialModel.designer.cs">
+      <DependentUpon>202005061928095_InitialModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005061930480_PopulateVehicleMakes.cs" />
+    <Compile Include="Migrations\202005061930480_PopulateVehicleMakes.designer.cs">
+      <DependentUpon>202005061930480_PopulateVehicleMakes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005061934210_PopulateVehicleModels.cs" />
+    <Compile Include="Migrations\202005061934210_PopulateVehicleModels.designer.cs">
+      <DependentUpon>202005061934210_PopulateVehicleModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository.cs" />
+    <Compile Include="VehicleDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Project.DAL\Project.DAL.csproj">
-      <Project>{5B08EC87-3092-4695-B4E0-68D36997A497}</Project>
-      <Name>Project.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Project.Model.Common\Project.Model.Common.csproj">
       <Project>{F2E26788-01C8-4A94-A598-E592F454B5C6}</Project>
       <Name>Project.Model.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Project.Repository.Common\Project.Repository.Common.csproj">
-      <Project>{EAF88B5D-574B-432F-BA73-402B4F59C709}</Project>
-      <Name>Project.Repository.Common</Name>
+    <ProjectReference Include="..\Project.Model\Project.Model.csproj">
+      <Project>{77E8AD3C-EB8E-4DE3-A669-77EA1C849CC4}</Project>
+      <Name>Project.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Project.Service\Project.Service.csproj">
-      <Project>{6E448C52-8209-4088-8233-CAA70E7A96F8}</Project>
-      <Name>Project.Service</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202005061928095_InitialModel.resx">
+      <DependentUpon>202005061928095_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005061930480_PopulateVehicleMakes.resx">
+      <DependentUpon>202005061930480_PopulateVehicleMakes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005061934210_PopulateVehicleModels.resx">
+      <DependentUpon>202005061934210_PopulateVehicleModels.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

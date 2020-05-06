@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
+using Project.Common.SearchSortPage;
 using Project.Model;
-using Project.MVC.Models;
-using Project.MVC.SearchSortPage;
 using Project.Service.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 

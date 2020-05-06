@@ -1,4 +1,4 @@
-﻿using Project.Service.ServiceModels;
+﻿using Project.Model.Common;
 using System.Data.Entity;
 
 namespace Project.Service.Base

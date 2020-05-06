@@ -1,10 +1,7 @@
-﻿using Project.Service.ServiceModels;
-using System;
+﻿using Project.Model;
+using Project.Model.Common;
 using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Linq;
-using System.Reflection;
 
 namespace Project.Service.Base
 {

@@ -2,12 +2,12 @@
 using System.Net;
 using System.Web.Mvc;
 using Project.MVC.Models;
-using Project.Service.VehicleService;
 using AutoMapper;
-using Project.Service.ServiceModels;
 using System.Collections.Generic;
 using Project.MVC.SearchSortPage;
 using System;
+using Project.Service.Common;
+using Project.Model;
 
 namespace Project.MVC.Controllers
 {

@@ -215,8 +215,6 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\API\VehicleMakesController.cs" />
-    <Compile Include="Controllers\API\VehicleModelsController.cs" />
     <Compile Include="Controllers\VehicleMakesController.cs" />
     <Compile Include="Controllers\VehicleModelsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -294,6 +292,26 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Project.Model.Common\Project.Model.Common.csproj">
+      <Project>{F2E26788-01C8-4A94-A598-E592F454B5C6}</Project>
+      <Name>Project.Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Project.Model\Project.Model.csproj">
+      <Project>{77E8AD3C-EB8E-4DE3-A669-77EA1C849CC4}</Project>
+      <Name>Project.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Project.Repository.Common\Project.Repository.Common.csproj">
+      <Project>{EAF88B5D-574B-432F-BA73-402B4F59C709}</Project>
+      <Name>Project.Repository.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Project.Repository\Project.Repository.csproj">
+      <Project>{693FB151-0008-40F7-8357-E2760AC8F3B3}</Project>
+      <Name>Project.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Project.Service.Common\Project.Service.Common.csproj">
+      <Project>{22F533C0-726F-42FD-9293-5A57CDCBA8D8}</Project>
+      <Name>Project.Service.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Project.Service\Project.Service.csproj">
       <Project>{6e448c52-8209-4088-8233-caa70e7a96f8}</Project>
       <Name>Project.Service</Name>

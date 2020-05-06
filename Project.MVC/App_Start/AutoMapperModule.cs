@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Ninject;
 using Ninject.Modules;
+using Project.Model;
 using Project.MVC.Models;
-using Project.Service.ServiceModels;
-using System;
 
 namespace Project.MVC.App_Start
 {

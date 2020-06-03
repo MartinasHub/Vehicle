@@ -1,4 +1,4 @@
-const webApiUrl = "/api/VehicleModels";
+const webApiUrl = "http://localhost:57296/api/VehicleModels";
 
 class VehicleMakeService {
     get = async(urlParmas) => {

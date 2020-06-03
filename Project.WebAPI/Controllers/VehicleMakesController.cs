@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using Project.Common.SearchSortPage;
 using Project.Model;
-using Project.Repository;
+using Project.Service.Common;
+using Project.WebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,27 +12,24 @@ namespace Project.WebAPI.Controllers
 {
     public class VehicleMakesController : ApiController
     {
-        private UnitOfWork _unitOfWork = new UnitOfWork();
+        private IVehicleServiceMake _vehicleServiceMake;
         private readonly IMapper _mapper;
 
-        public VehicleMakesController(UnitOfWork unitOfWork, IMapper mapper)
+        public VehicleMakesController(IVehicleServiceMake vehicleServiceMake, IMapper mapper)
         {
-            this._unitOfWork = unitOfWork;
+            this._vehicleServiceMake = vehicleServiceMake;
             this._mapper = mapper;
         }
 
         // GET /api/VehicleMakes
         [HttpGet]
-        public async Task<IHttpActionResult> Get(string search, string sortOrder, int? page)
+        public async Task<IHttpActionResult> Get([FromUri]SearchingSortingPaging searchingSortingPaging)
         {
-            Searching searching = new Searching();
-            Sorting sorting = new Sorting();
-            Paging paging = new Paging();
-            searching.Search = search;
-            sorting.SortOrder = sortOrder;
-            paging.Page = page;
+            string search = searchingSortingPaging.Search;
+            string sortOrder = searchingSortingPaging.SortOrder;
+            int? page = searchingSortingPaging.Page;
 
-            var vehicleMapped = _mapper.Map<IEnumerable<VehicleMakeView>>(await _unitOfWork.VehicleMakeRepository.GetAllAsync(search, sortOrder, page));
+            var vehicleMapped = _mapper.Map<IEnumerable<VehicleMakeView>>(await _vehicleServiceMake.GetAllAsync(search, sortOrder, page));
             return Ok(vehicleMapped);
         }
 
@@ -39,7 +37,7 @@ namespace Project.WebAPI.Controllers
         //GET /api/VehicleMakes/1
         public async Task<IHttpActionResult> GetVehicleMake(int id)
         {
-            var vehicleMake = await _unitOfWork.VehicleMakeRepository.GetByIdAsync(id);
+            var vehicleMake = await _vehicleServiceMake.GetByIdAsync(id);
 
             if (vehicleMake == null)
             {
@@ -56,7 +54,7 @@ namespace Project.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
             var vehicleMapped = _mapper.Map<VehicleMakeView>(vehicleMake);
-            await _unitOfWork.VehicleMakeRepository.InsertAsync(vehicleMake);
+            await _vehicleServiceMake.InsertAsync(vehicleMake);
 
             return Created(new Uri(Request.RequestUri + "/" + vehicleMake.Id), vehicleMake);
         }
@@ -68,7 +66,7 @@ namespace Project.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            await _unitOfWork.VehicleMakeRepository.UpdateAsync(vehicleMake);
+            await _vehicleServiceMake.UpdateAsync(vehicleMake);
 
             if (vehicleMake == null)
                 return NotFound();
@@ -81,12 +79,12 @@ namespace Project.WebAPI.Controllers
         [HttpDelete]
         public async Task<IHttpActionResult> Delete(int id)
         {
-            VehicleMake vehicleMake = await _unitOfWork.VehicleMakeRepository.GetByIdAsync(id);
+            VehicleMake vehicleMake = await _vehicleServiceMake.GetByIdAsync(id);
 
             if (vehicleMake == null)
                 return NotFound();
 
-            await _unitOfWork.VehicleMakeRepository.DeleteAsync(id);
+            await _vehicleServiceMake.DeleteAsync(id);
 
             var vehicleMapped = _mapper.Map<VehicleMakeView>(vehicleMake);
 

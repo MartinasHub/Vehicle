@@ -48,39 +48,3 @@ class VehicleMakeList extends React.Component{
 }
 
 export default inject("VehicleMakeStore")(observer(VehicleMakeList));
-
-class Create extends React.Component {
-    CreateVehicleMake = (e) => {
-        e.preventDefault();
-        this.props.VehicleMakeStore.createVehicleMakesAsync({
-            name: this.refs.name.value,
-            abrv: this.refs.abrv.value,
-        });
-        this.refs.name.value = null;
-        this.refs.abrv.value = null;
-    };
-    render() {
-        return (
-            <div>
-                <div>
-                    <form onSubmit={this.CreateVehicleMake}>
-                    <div className="form-group">
-                        <input ref="name" id="name" type="text" placeholder="Name"/>
-                    </div>
-                    <div className="form-group">
-                        <input ref="abrv" id="abrv" type="text" placeholder="Abrv"/>
-                    </div>
-                        <button type="submit">Save</button>
-                    </form>
-                </div>
-            </div>
-        )
-    }
-}
-
-export default inject("VehicleMakeStore")(observer(Create)); 
-
-Delete = (e) => {
-    e.preventDefault();
-    this.props.VehicleMakeStore.deleteVehicleMakesAsync(this.props.id)
-}

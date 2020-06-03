@@ -7,32 +7,32 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Project.Repository;
+using Project.WebAPI.Models;
 
 namespace Project.WebAPI.Controllers
 {
     public class VehicleModelsController : ApiController
     {
-        private UnitOfWork _unitOfWork = new UnitOfWork();
+        private IVehicleServiceModel _vehicleServiceModel;
+        private IVehicleServiceMake _vehicleServiceMake;
         private readonly IMapper _mapper;
 
-        public VehicleModelsController(UnitOfWork unitOfWork, IMapper mapper)
+        public VehicleModelsController(IVehicleServiceModel vehicleServiceModel, IVehicleServiceMake vehicleServiceMake, IMapper mapper)
         {
-            this._unitOfWork = unitOfWork;
+            this._vehicleServiceModel = vehicleServiceModel;
+            this._vehicleServiceMake = vehicleServiceMake;
             this._mapper = mapper;
         }
 
         [HttpGet]
         // GET /api/VehicleModels
-        public async Task<IHttpActionResult> Get(string search, string sortOrder, int? page)
+        public async Task<IHttpActionResult> Get([FromUri]SearchingSortingPaging searchingSortingPaging)
         {
-            Searching searching = new Searching();
-            Sorting sorting = new Sorting();
-            Paging paging = new Paging();
-            searching.Search = search;
-            sorting.SortOrder = sortOrder;
-            paging.Page = page;
+            string search = searchingSortingPaging.Search;
+            string sortOrder = searchingSortingPaging.SortOrder;
+            int? page = searchingSortingPaging.Page;
 
-            var vehicleMapped = _mapper.Map<IEnumerable<VehicleModelView>>(await _unitOfWork.VehicleModelRepository.GetAllAsync(search, sortOrder, page));
+            var vehicleMapped = _mapper.Map<IEnumerable<VehicleModelView>>(await _vehicleServiceModel.GetAllAsync(search, sortOrder, page));
             return Ok(vehicleMapped);
         }
 
@@ -40,7 +40,7 @@ namespace Project.WebAPI.Controllers
         //GET /api/VehicleModels/1
         public async Task<IHttpActionResult> GetVehicleModel(int id)
         {
-            var vehicleModel = await _unitOfWork.VehicleModelRepository.GetByIdAsync(id);
+            var vehicleModel = await _vehicleServiceModel.GetByIdAsync(id);
 
             if (vehicleModel == null)
             {
@@ -58,7 +58,7 @@ namespace Project.WebAPI.Controllers
                 return BadRequest();
 
             var vehicleMapped = _mapper.Map<VehicleModelView>(vehicleModel);
-            await _unitOfWork.VehicleModelRepository.InsertAsync(vehicleModel);
+            await _vehicleServiceModel.InsertAsync(vehicleModel);
 
             return Created(new Uri(Request.RequestUri + "/" + vehicleModel.Id), vehicleModel);
         }
@@ -70,7 +70,7 @@ namespace Project.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            await _unitOfWork.VehicleModelRepository.UpdateAsync(vehicleModel);
+            await _vehicleServiceModel.UpdateAsync(vehicleModel);
 
             if (vehicleModel == null)
                 return NotFound();
@@ -83,12 +83,12 @@ namespace Project.WebAPI.Controllers
         [HttpDelete]
         public async Task<IHttpActionResult> Delete(int id)
         {
-            VehicleModel vehicleModel = await _unitOfWork.VehicleModelRepository.GetByIdAsync(id);
+            VehicleModel vehicleModel = await _vehicleServiceModel.GetByIdAsync(id);
 
             if (vehicleModel == null)
                 return NotFound();
 
-            await _unitOfWork.VehicleMakeRepository.DeleteAsync(id);
+            await _vehicleServiceMake.DeleteAsync(id);
 
             var vehicleMapped = _mapper.Map<VehicleModelView>(vehicleModel);
 

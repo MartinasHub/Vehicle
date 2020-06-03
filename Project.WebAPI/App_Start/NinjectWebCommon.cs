@@ -11,7 +11,6 @@ namespace Project.WebAPI.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using Ninject.Web.Common.WebHost;
-    using Project.Common;
     using Project.DAL;
     using Project.Repository;
     using Project.Repository.Common;

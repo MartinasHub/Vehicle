@@ -1,15 +1,14 @@
 import React from 'react';
 import './Layouts/App.css';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import { VehicleMakeCreate } from './Components/VehicleMakeCreate';
-import { VehicleMakeEdit } from './Components/VehicleMakeEdit';
-import { VehicleMakeDelete} from './Components/VehicleMakeDelete';
-import { VehicleModelList } from './Components/VehicleModelList';
-import { VehicleModelCreate } from './Components/VehicleModelCreate';
-import { VehicleModelEdit } from './Components/VehicleModelEdit';
-import { VehicleModelDelete} from './Components/VehicleModelDelete';
-import { VehicleMakeList } from './Components/VehicleMakeList';
-
+import VehicleMakeList from './Components/VehicleMakeList';
+import VehicleMakeCreate from './Components/VehicleMakeCreate';
+import VehicleMakeEdit from './Components/VehicleMakeEdit';
+import VehicleMakeDelete from './Components/VehicleMakeDelete';
+import VehicleModelList from './Components/VehicleModelList';
+import VehicleModelCreate from './Components/VehicleModelCreate';
+import VehicleModelEdit from './Components/VehicleModelEdit';
+import VehicleModelDelete from './Components/VehicleModelDelete';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App () {

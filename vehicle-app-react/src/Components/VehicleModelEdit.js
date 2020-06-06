@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 
 class Edit extends React.Component {
-    EditVehicleModel = (e) => {
+    VehicleModelEdit = (e) => {
         e.preventDefault();
         this.props.VehicleModelStore.editVehicleModelsAsync({
             name: this.refs.name.value,
@@ -15,7 +15,7 @@ class Edit extends React.Component {
         return (
             <div>
                 <div>
-                    <form onChange={this.EditVehicleModel}>
+                    <form onChange={this.VehicleModelEdit}>
                     <div className="form-group">
                         <input ref="name" id="name" type="text" placeholder="Name"/>
                     </div>

@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { observer, inject } from 'mobx-react';
 
 class Create extends React.Component {
-    CreateVehicleMake = (e) => {
+    VehicleMakeCreate = (e) => {
         e.preventDefault();
         this.props.VehicleMakeStore.createVehicleMakesAsync({
             name: this.refs.name.value,
@@ -15,7 +15,7 @@ class Create extends React.Component {
         return (
             <div>
                 <div>
-                    <form onSubmit={this.CreateVehicleMake}>
+                    <form onSubmit={this.VehicleMakeCreate}>
                     <div className="form-group">
                         <input ref="name" id="name" type="text" placeholder="Name"/>
                     </div>

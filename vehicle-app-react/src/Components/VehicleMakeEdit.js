@@ -1,8 +1,16 @@
-import * as React from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import {
+    Form,
+    FormGroup,
+    Label,
+    Input,
+    Button
+} from 'reactstrap';
 import { observer, inject } from 'mobx-react';
 
 class Edit extends React.Component {
-    EditVehicleMake = (e) => {
+    VehicleMakeEdit = (e) => {
         e.preventDefault();
         this.props.VehicleMakeStore.editVehicleMakesAsync({
             name: this.refs.name.value,
@@ -15,14 +23,14 @@ class Edit extends React.Component {
         return (
             <div>
                 <div>
-                    <form onChange={this.EditVehicleMake}>
+                    <form onChange={this.VehicleMakeEdit}>
                     <div className="form-group">
                         <input ref="name" id="name" type="text" placeholder="Name"/>
                     </div>
                     <div className="form-group">
                         <input ref="abrv" id="abrv" type="text" placeholder="Abrv"/>
                     </div>
-                        <button onClick={this.EditVehicleMake}>Edit</button>
+                        <button onClick={this.VehicleMakeEdit}>Edit</button>
                     </form>
                 </div>
             </div>

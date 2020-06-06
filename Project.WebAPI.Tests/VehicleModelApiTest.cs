@@ -36,14 +36,14 @@ namespace Project.WebAPI.Tests
         }
 
         [Fact]
-        public async Task PostsLocation()
+        public void PostsLocation()
         {
             var vehicleModelController = new VehicleModelsController(vehicleServiceModel.Object, _vehicleServiceMake, _mapper);
             var config = new HttpConfiguration();
 
             var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/");
 
-            IHttpRoute route = config.Routes.MapHttpRoute("DefaultApi","api/{controller}/{id}");
+            IHttpRoute route = config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}");
 
             HttpRouteData routeData = new HttpRouteData(route, new HttpRouteValueDictionary
             {

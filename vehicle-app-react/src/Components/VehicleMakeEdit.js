@@ -1,18 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import {
-    Form,
-    FormGroup,
-    Label,
-    Input,
-    Button
-} from 'reactstrap';
+import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 
-class Edit extends React.Component {
+class VehicleMakeEdit extends React.Component {
     VehicleMakeEdit = (e) => {
         e.preventDefault();
-        this.props.VehicleMakeStore.editVehicleMakesAsync({
+        this.props.VehicleMakeStore.updateVehicleMakesAsync({
             name: this.refs.name.value,
             abrv: this.refs.abrv.value,
         });
@@ -38,4 +30,4 @@ class Edit extends React.Component {
     }
 }
 
-export default inject("VehicleMakeStore")(observer(Edit)); 
+export default inject("VehicleMakeStore")(observer(VehicleMakeEdit)); 

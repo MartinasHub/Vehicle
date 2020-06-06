@@ -3,7 +3,7 @@ import VehicleModelService from './Common/VehicleModelService';
 
 class VehicleModelStore {
 constructor(){
-    this.vehicleModelService = new VehicleModelService();
+    this.VehicleModelService = new VehicleModelService();
 }
     vehicleModelData = {
         model: []
@@ -19,7 +19,7 @@ constructor(){
                 isAscending: this.vehicleModelData.isAscending
             };
             const urlParams = new URLSearchParams(Object.entries(params));
-            const data = await this.vehicleModelService.get(urlParams)
+            const data = await this.VehicleModelService.get(urlParams)
             runInAction(() => {
                 this.vehicleModelData = data;
             });
@@ -31,7 +31,7 @@ constructor(){
     };
     createVehicleModelsAsync = async (model) => {
         try {
-            const response = await this.vehicleModelService.post(model);
+            const response = await this.VehicleModelService.post(model);
             if (response.status === 201) {
                 runInAction(() => {
                     this.status = "success";
@@ -46,7 +46,7 @@ constructor(){
     };
     updateVehicleModelsAsync = async (vehicle) => {
         try {
-            const response = await this.vehicleModelService.put(vehicle)
+            const response = await this.VehicleModelService.put(vehicle)
             if (response.status === 200) {
                 runInAction(() => {
                     this.status = "success";
@@ -60,7 +60,7 @@ constructor(){
     };
     deleteVehicleModelsAsync = async (id) => {
         try {
-            const response = await this.vehicleModelService.delete(id);
+            const response = await this.VehicleModelService.delete(id);
             if (response.status === 204) {
                 runInAction(() => {
                     this.status = "success";

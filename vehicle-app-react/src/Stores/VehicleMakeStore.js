@@ -1,9 +1,9 @@
 import { observable, runInAction, decorate } from 'mobx';
-import VehicleMakeService from './Common/VehicleMakeService';
+import VehicleMakeService from '../Common/VehicleMakeService';
 
 class VehicleMakeStore {
 constructor(){
-    this.vehicleMakeService = new VehicleMakeService();
+    this.VehicleMakeService = new VehicleMakeService();
 }
     vehicleMakeData = {
         model: []
@@ -19,7 +19,7 @@ constructor(){
                 isAscending: this.vehicleMakeData.isAscending
             };
             const urlParams = new URLSearchParams(Object.entries(params));
-            const data = await this.vehicleMakeService.get(urlParams)
+            const data = await this.VehicleMakeService.get(urlParams)
             runInAction(() => {
                 this.vehicleMakeData = data;
             });
@@ -31,7 +31,7 @@ constructor(){
     };
     createVehicleMakesAsync = async (model) => {
         try {
-            const response = await this.vehicleMakeService.post(model);
+            const response = await this.VehicleMakeService.post(model);
             if (response.status === 201) {
                 runInAction(() => {
                     this.status = "success";
@@ -46,7 +46,7 @@ constructor(){
     };
     updateVehicleMakesAsync = async (vehicle) => {
         try {
-            const response = await this.vehicleMakeService.put(vehicle)
+            const response = await this.VehicleMakeService.put(vehicle)
             if (response.status === 200) {
                 runInAction(() => {
                     this.status = "success";
@@ -60,7 +60,7 @@ constructor(){
     };
     deleteVehicleMakeAsync = async (id) => {
         try {
-            const response = await this.vehicleMakeService.delete(id);
+            const response = await this.VehicleMakeService.delete(id);
             if (response.status === 204) {
                 runInAction(() => {
                     this.status = "success";

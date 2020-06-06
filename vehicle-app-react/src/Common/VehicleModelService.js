@@ -1,6 +1,6 @@
 const webApiUrl = "http://localhost:57296/api/VehicleModels";
 
-class VehicleMakeService {
+class VehicleModelService {
     get = async(urlParmas) => {
         const options = {
             method: "GET",

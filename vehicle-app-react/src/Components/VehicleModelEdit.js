@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 
-class Edit extends React.Component {
+class VehicleModelEdit extends React.Component {
     VehicleModelEdit = (e) => {
         e.preventDefault();
-        this.props.VehicleModelStore.editVehicleModelsAsync({
+        this.props.VehicleModelStore.updateVehicleModelsAsync({
             name: this.refs.name.value,
             abrv: this.refs.abrv.value,
         });
@@ -30,4 +30,4 @@ class Edit extends React.Component {
     }
 }
 
-export default inject("VehicleModelStore")(observer(Edit)); 
+export default inject("VehicleModelStore")(observer(VehicleModelEdit)); 

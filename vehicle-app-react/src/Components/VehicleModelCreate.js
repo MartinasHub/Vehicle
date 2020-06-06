@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 
-class Create extends React.Component {
+class VehicleModelCreate extends React.Component {
     VehicleModelCreate = (e) => {
         e.preventDefault();
         this.props.VehicleModelStore.createVehicleModelsAsync({
@@ -35,4 +35,4 @@ class Create extends React.Component {
     }
 }
 
-export default inject("VehicleModelStore")(observer(Create)); 
+export default inject("VehicleModelStore")(observer(VehicleModelCreate)); 

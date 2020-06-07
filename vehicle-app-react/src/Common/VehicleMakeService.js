@@ -1,11 +1,11 @@
 const webApiUrl = "http://localhost:57296/api/VehicleMakes";
 
-class VehicleMakeService {
-    get = async(urlParmas) => {
+export default class VehicleMakeService {
+    get = async() => {
         const options = {
-            method: "GET",
+            method: "GET"
         }
-    const request = new Request(webApiUrl + "?" + urlParams, options);
+    const request = new Request(webApiUrl, options);
     const response = await fetch(request);
     return response.json();
     }
@@ -45,4 +45,3 @@ class VehicleMakeService {
         return response;
     }
 }
-    export default VehicleMakeService;

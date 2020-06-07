@@ -1,7 +1,7 @@
 import { observable, runInAction, decorate } from 'mobx';
-import VehicleModelService from './Common/VehicleModelService';
+import VehicleModelService from '../Common/VehicleModelService';
 
-class VehicleModelStore {
+export default class VehicleModelStore {
 constructor(){
     this.VehicleModelService = new VehicleModelService();
 }
@@ -79,5 +79,3 @@ decorate(VehicleModelStore, {
     searchQuery: observable,
     status: observable
 });
-
-export default new VehicleModelStore();

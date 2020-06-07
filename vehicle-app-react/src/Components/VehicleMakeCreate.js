@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
+import { Form, FormGroup, Input, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 class VehicleMakeCreate extends React.Component {
     VehicleMakeCreate = (e) => {
@@ -13,19 +15,16 @@ class VehicleMakeCreate extends React.Component {
     };
     render() {
         return (
-            <div>
-                <div>
-                    <form onSubmit={this.VehicleMakeCreate}>
-                    <div className="form-group">
-                        <input ref="name" id="name" type="text" placeholder="Name"/>
-                    </div>
-                    <div className="form-group">
-                        <input ref="abrv" id="abrv" type="text" placeholder="Abrv"/>
-                    </div>
-                        <button type="submit">Save</button>
-                    </form>
-                </div>
-            </div>
+            <Form onSubmit={this.VehicleMakeCreate}>
+            <FormGroup>
+                <Input type="text" id="name" name="name" placeholder="Name" required></Input>
+            </FormGroup>
+            <FormGroup>
+                <Input type="text" id="abrv" name="abrv" placeholder="Abrv" required></Input>
+            </FormGroup>
+            <Button type="submit">Submit</Button>
+            <Link to="/" className="btn btn-danger ml-2">Cancel</Link>
+            </Form>
         )
     }
 }

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
+import { Table, Input, Button } from 'reactstrap';
 
 class VehicleModelList extends React.Component{
     
@@ -22,10 +23,19 @@ class VehicleModelList extends React.Component{
     render(){
         return (
             <div>
-                <input type="search" placeholder="Search" onKeyPress={this.searchVehicleModels} />
-                <input type="submit" value="Sort" onClick={this.sortVehicleModels}/>
-
-                <table>
+                <div className="row form-group">
+                <div className="input-group mb-3">
+                <Input type="text" className="form-control" placeholder="Search" />
+                <div className="input-group-append">
+                <Button type="submit" onClick={this.searchVehicleModels} color="primary">Search</Button>
+                </div>
+                </div>
+                <div className="col text-center">
+                <Button type="submit" onClick={this.sortVehicleModels} color="info">Sort</Button>
+                </div>
+                </div>
+                <br />
+                <Table className="table table-hover">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -43,7 +53,7 @@ class VehicleModelList extends React.Component{
                         </tr>
                     ))}
                 </tbody>
-                </table>
+                </Table>
             </div>
         )
     }

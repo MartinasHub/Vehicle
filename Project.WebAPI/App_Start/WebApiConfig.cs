@@ -21,7 +21,7 @@ namespace Project.WebAPI
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            EnableCorsAttribute cors = new EnableCorsAttribute("localhost:3000", "*", "*");
+            EnableCorsAttribute cors = new EnableCorsAttribute("http://localhost:3000/", "*", "*");
 
         }
     }

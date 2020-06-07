@@ -4,11 +4,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { Provider } from 'mobx-react';
+import VehicleMakeStore from './Stores/VehicleMakeStore';
+import VehicleModelStore from './Stores/VehicleModelStore';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider
+     VehicleMakeStore={new VehicleMakeStore()}>
+      <Provider 
+      VehicleModelStore={new VehicleModelStore()}><App />
+      </Provider>
+  </Provider>,
   document.getElementById('root')
 );
 

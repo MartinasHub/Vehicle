@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Project.Common.SearchSortPage
 {
-    public class Paging
+    public class SearchingSortingPaging
     {
         public int? Page { get; set; }
+        public string SortOrder { get; set; }
+        public string Search {get; set;}
     }
 }

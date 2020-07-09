@@ -1,62 +1,113 @@
 ﻿using Project.DAL;
-using Project.Model;
+using Project.Model.Common;
+using Project.Repository.Common;
 using System;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Project.Repository
 {
-    public class UnitOfWork : IDisposable
-    {
-        private readonly VehicleDbContext _context = new VehicleDbContext();
-        private Repository<VehicleMake> vehicleMakeRepository;
-        private Repository<VehicleModel> vehicleModelRepository;
+    public class UnitOfWork : IUnitOfWork
+    { 
+        protected VehicleDbContext DbContext { get; private set; }
 
-        public Repository<VehicleMake> VehicleMakeRepository
+        public UnitOfWork(VehicleDbContext dbContext)
         {
-            get
+            if (dbContext == null)
             {
-                if(this.vehicleMakeRepository == null)
+                throw new ArgumentNullException("DbContext");
+            }
+            DbContext = dbContext;
+        }
+
+        public async Task<int> CommitAsync()
+        {
+            int result = 0;
+            using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                result = await DbContext.SaveChangesAsync();
+                scope.Complete();
+            }
+            return result;
+        }
+
+        public virtual Task<int> DeleteAsync<T>(Guid id) where T : class, IBaseDomain
+        {
+            var entity = DbContext.Set<T>().Find(id);
+            if (entity == null)
+            {
+                return Task.FromResult(0);
+            }
+            return DeleteAsync<T>(entity);
+        }
+
+        public virtual Task<int> DeleteAsync<T>(T entity) where T : class, IBaseDomain
+        {
+            try
+            {
+                DbEntityEntry dbEntityEntry = DbContext.Entry(entity);
+                if (dbEntityEntry.State != EntityState.Deleted)
                 {
-                    this.vehicleMakeRepository = new Repository<VehicleMake>(_context);
+                    dbEntityEntry.State = EntityState.Deleted;
                 }
-                return vehicleMakeRepository;
+                else
+                {
+                    DbContext.Set<T>().Attach(entity);
+                    DbContext.Set<T>().Remove(entity);
+                }
+                return Task.FromResult(1);
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
-        public Repository<VehicleModel> VehicleModelRepository
+        public virtual Task<int> InsertAsync<T>(T entity) where T : class, IBaseDomain
         {
-            get
+            try
             {
-                if (this.vehicleModelRepository == null)
+                DbEntityEntry dbEntityEntry = DbContext.Entry(entity);
+                if (dbEntityEntry.State != EntityState.Detached)
                 {
-                    this.vehicleModelRepository = new Repository<VehicleModel>(_context);
+                    dbEntityEntry.State = EntityState.Added;
                 }
-                return vehicleModelRepository;
+                else
+                {
+                    DbContext.Set<T>().Add(entity);
+                }
+                return Task.FromResult(1);
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
-        public void Save()
+        public virtual Task<int> UpdateAsync<T>(T entity) where T : class, IBaseDomain
         {
-            _context.SaveChanges();
-        }
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
+            try
             {
-                if (disposing)
+                DbEntityEntry dbEntityEntry = DbContext.Entry(entity);
+                if (dbEntityEntry.State == EntityState.Detached)
                 {
-                    _context.Dispose();
+                    DbContext.Set<T>().Attach(entity);
                 }
+                dbEntityEntry.State = EntityState.Modified;
+                return Task.FromResult(1);
             }
-            this.disposed = true;
+            catch (Exception e)
+            {
+                throw e;
+            }
+
         }
 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            DbContext.Dispose();
         }
     }
 }

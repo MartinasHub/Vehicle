@@ -105,12 +105,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\NinjectWebCommon.cs" />
-    <Compile Include="AutoMapperMoudle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchSortPage\Paging.cs" />
-    <Compile Include="SearchSortPage\Searching.cs" />
-    <Compile Include="SearchSortPage\Sorting.cs" />
+    <Compile Include="SearchSortPage\SearchingSortingPaging.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

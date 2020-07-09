@@ -2,13 +2,9 @@
 using Ninject;
 using Ninject.Modules;
 using Project.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Project.WebAPI.Models;
 
-namespace Project.Common
+namespace Project.WebAPI.App_Start
 {
     public class AutoMapperModule : NinjectModule
     {
